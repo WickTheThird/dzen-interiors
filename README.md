@@ -1,73 +1,100 @@
-# React + TypeScript + Vite
+# D-Zen Interiors
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Marketing website for **D-Zen Interiors**, a renovation and interior-finishing
+("zugrav") business in Cluj-Napoca, Romania. A single-page, photography-led
+site in Romanian with a calm, premium feel: the work does the talking, not
+long blocks of copy.
 
-Currently, two official plugins are available:
+Live domain: [dzeninteriors.ro](https://dzeninteriors.ro/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Tech stack
 
-## React Compiler
+- **Vite** + **React 19** + **TypeScript**
+- **Tailwind CSS** for styling
+- Hosted on **GitHub Pages** with a custom domain, deployed via GitHub Actions
+- Romanian copy (`lang="ro"`), Cluj-Napoca local SEO
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Project layout
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+public/
+  img/            Optimized WebP photos served by the site (+ og-image.jpg)
+  CNAME           Custom domain (dzeninteriors.ro)
+  robots.txt      Crawler rules + sitemap pointer
+  sitemap.xml     Single-page sitemap
+  404.html        Redirects unknown paths back to the root
+src/
+  content/
+    site.ts       Single source of truth for all copy and image paths
+  components/
+    Nav.tsx
+    Hero.tsx
+    BeforeAfter.tsx   Drag-reveal before/after slider
+    Projects.tsx
+    About.tsx
+    Instagram.tsx
+    Contact.tsx
+CONTENT.md        Editorial blueprint: copy, section order, image manifest
+.github/workflows/deploy.yml   GitHub Pages build + deploy
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Editing content
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+All visible copy and image references live in [`src/content/site.ts`](src/content/site.ts),
+which mirrors the editorial blueprint in [`CONTENT.md`](CONTENT.md). To change
+text, headings, phone number, or social links, edit `site.ts`. Keep `CONTENT.md`
+in sync so it stays the source of truth.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Images
+
+Source photos are optimized to WebP and committed under `public/img/`. The raw
+originals are kept out of the repo (gitignored). To regenerate an optimized
+copy from an original, use [`cwebp`](https://developers.google.com/speed/webp/docs/cwebp):
+
+```sh
+cwebp -quiet -q 80 -m 6 input.jpg -o public/img/output.webp
 ```
+
+To swap any image on the site, drop a replacement into `public/img/` using the
+same filename referenced in `site.ts`.
+
+The social-share card `public/img/og-image.jpg` is a 1200x630 JPEG (JPEG rather
+than WebP for broad compatibility across social platforms).
+
+## Local development
+
+```sh
+npm install      # install dependencies
+npm run dev      # start the dev server with HMR
+npm run build    # type-check and build for production into dist/
+npm run preview  # preview the production build locally
+npm run lint     # run ESLint
+```
+
+## Deployment
+
+Pushing to `main` triggers the GitHub Actions workflow in
+[`.github/workflows/deploy.yml`](.github/workflows/deploy.yml), which builds the
+site and publishes `dist/` to GitHub Pages.
+
+First-time setup (repo admin, one time only):
+
+1. In the repository, go to **Settings -> Pages**.
+2. Under **Build and deployment -> Source**, choose **GitHub Actions**.
+3. Point DNS for `dzeninteriors.ro` at GitHub Pages:
+   - Apex `dzeninteriors.ro` -> four A records:
+     `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`
+   - `www` -> CNAME `wickthethird.github.io`
+
+The `public/CNAME` file applies the custom domain on every deploy automatically.
+
+## SEO notes
+
+On-page SEO is handled in [`index.html`](index.html): keyword-rich title and
+meta description, Open Graph and Twitter cards, geo meta tags for Cluj-Napoca,
+a canonical URL, and `HousePainter`/LocalBusiness JSON-LD structured data.
+
+For local "zugrav Cluj" searches, the biggest off-site ranking lever is a
+**Google Business Profile** with a name, address, and phone number that match
+the structured data on this site. After deploying, submit
+`https://dzeninteriors.ro/sitemap.xml` in Google Search Console.
