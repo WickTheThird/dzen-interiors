@@ -30,16 +30,18 @@ function Slider({
     }
     window.addEventListener('pointermove', onMove)
     window.addEventListener('pointerup', onUp)
+    window.addEventListener('pointercancel', onUp)
     return () => {
       window.removeEventListener('pointermove', onMove)
       window.removeEventListener('pointerup', onUp)
+      window.removeEventListener('pointercancel', onUp)
     }
   }, [setFromClientX])
 
   return (
     <div
       ref={containerRef}
-      className="reveal group relative aspect-[4/3] w-full select-none overflow-hidden rounded-sm"
+      className="reveal group relative aspect-[4/3] w-full touch-pan-y select-none overflow-hidden rounded-sm"
       onPointerDown={(e) => {
         draggingRef.current = true
         setFromClientX(e.clientX)
@@ -92,7 +94,7 @@ function Slider({
             if (e.key === 'ArrowLeft') setPos((p) => Math.max(0, p - 4))
             if (e.key === 'ArrowRight') setPos((p) => Math.min(100, p + 4))
           }}
-          className="pointer-events-auto absolute top-1/2 left-1/2 flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 cursor-ew-resize items-center justify-center rounded-full border border-bone/40 bg-ink/70 text-bone backdrop-blur transition group-hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-sand"
+          className="pointer-events-auto absolute top-1/2 left-1/2 flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 touch-none cursor-ew-resize items-center justify-center rounded-full border border-bone/40 bg-ink/70 text-bone backdrop-blur transition group-hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-sand"
         >
           <svg viewBox="0 0 24 24" className="h-5 w-5 fill-current" aria-hidden="true">
             <path d="M9 7 4 12l5 5V7Zm6 0v10l5-5-5-5Z" />
