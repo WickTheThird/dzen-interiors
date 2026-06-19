@@ -50,6 +50,51 @@ export const site = {
     ],
   },
 
+  gallery: {
+    eyebrow: 'Galerie',
+    title: 'Lucrare recentă în Cluj-Napoca',
+    caption:
+      'Apartament finisat complet: pregătirea pereților, zugrăveli fine și finisaje predate la cheie.',
+    items: [
+      {
+        src: '/img/gallery-1.webp',
+        orientation: 'landscape',
+        alt: 'Cameră zugrăvită alb cu vedere spre oraș, finisaje D-Zen Interiors în Cluj-Napoca',
+        caption: 'Cameră cu balcon, pereți finisați',
+      },
+      {
+        src: '/img/gallery-2.webp',
+        orientation: 'landscape',
+        alt: 'Living proaspăt zugrăvit cu vedere spre dealuri, Cluj-Napoca',
+        caption: 'Living, zugrăveli fine',
+      },
+      {
+        src: '/img/gallery-3.webp',
+        orientation: 'portrait',
+        alt: 'Perete alb finisat impecabil și parchet laminat, lucrare zugrav Cluj-Napoca',
+        caption: 'Detaliu perete și parchet',
+      },
+      {
+        src: '/img/gallery-4.webp',
+        orientation: 'landscape',
+        alt: 'Dormitor cu pereți albi finisați și parchet gri, renovare în Cluj-Napoca',
+        caption: 'Dormitor predat la cheie',
+      },
+      {
+        src: '/img/gallery-5.webp',
+        orientation: 'portrait',
+        alt: 'Cameră finisată cu acces spre hol, zugrăveli și finisaje Cluj-Napoca',
+        caption: 'Cameră și acces hol',
+      },
+      {
+        src: '/img/gallery-6.webp',
+        orientation: 'portrait',
+        alt: 'Cameră luminoasă cu balcon și parchet laminat, finisaje D-Zen Interiors Cluj',
+        caption: 'Cameră luminoasă cu balcon',
+      },
+    ],
+  },
+
   about: {
     eyebrow: 'Despre',
     title: 'Calitate, încredere, detaliu',

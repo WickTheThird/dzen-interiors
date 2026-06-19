@@ -3,6 +3,7 @@ import { site } from '../content/site'
 
 const links = [
   { label: 'Proiecte', href: '#proiecte' },
+  { label: 'Galerie', href: '#galerie' },
   { label: 'Despre', href: '#despre' },
   { label: 'Instagram', href: '#instagram' },
   { label: 'Contact', href: '#contact' },
